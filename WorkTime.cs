@@ -62,8 +62,10 @@ namespace startup_timer {
 		private void UpdateNotifyIcon() {
 			notifyIcon.Text = GetWorkTime();
 		}
+
 		private void Show8HAlert() {
 			wasAfter8hAlert = true;
+			notifyIcon.Icon = Properties.Resources.Icon2;
 			MessageBox.Show("You already worked 8 hours", "Startup-Timer");
 		}
 
