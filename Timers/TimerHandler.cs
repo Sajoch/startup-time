@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 
 namespace startup_timer {
@@ -8,7 +8,8 @@ namespace startup_timer {
 
 		public TimerHandler(int interval, ITimerHandler handler) {
 			this.handler = handler;
-			timer = new Timer {
+            handler.Update();
+            timer = new Timer {
 				Interval = interval
 			};
 			timer.Tick += new EventHandler(TimerEventProcessor);
