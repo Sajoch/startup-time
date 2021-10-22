@@ -8,7 +8,7 @@ namespace startup_timer {
         static void Main() {
             var container = new UnityContainer();
             container.RegisterType<ITimeGetter, LogonTimeGetter>();
-            container.RegisterType<TimeContainer>(new InjectionConstructor(
+            container.RegisterSingleton<TimeContainer>(new InjectionConstructor(
                 new ResolvedParameter<ITimeGetter>(),
                 8
              ));
@@ -17,20 +17,21 @@ namespace startup_timer {
 
             container.RegisterType<NotifyWidget>();
             container.Resolve<WorkTime>();
+            container.ResolveAll<ITimerHandler>();
             container.ResolveAll<TimerHandler>();
             Application.Run();
         }
 
         static void RegisterTimers(IUnityContainer container) {
-            container.RegisterType<ITimerHandler, OverflowUpdateTimer>("OverflowTimer");
-            container.RegisterType<ITimerHandler, WidgetUpdateTimer>("8HourTimer");
-            container.RegisterType<TimerHandler>("OverflowTimer", new InjectionConstructor(
-                60 * 60000,
-                new ResolvedParameter<ITimerHandler>("OverflowTimer")
-            ));
-            container.RegisterType<TimerHandler>("8HourTimer", new InjectionConstructor(
-                1000,
-                new ResolvedParameter<ITimerHandler>("8HourTimer")
+            RegisterTimer<OverflowUpdateTimer>(container, "OverflowTimer", 60 * 6000);
+            RegisterTimer<WidgetUpdateTimer>(container, "8HourTimer", 1000);
+        }
+
+        static void RegisterTimer<T>(IUnityContainer container, string name, int interval) where T : ITimerHandler {
+            container.RegisterType<ITimerHandler, T>(name);
+            container.RegisterType<TimerHandler>(name, new InjectionConstructor(
+                interval,
+                new ResolvedParameter<ITimerHandler>(name)
             ));
         }
     }

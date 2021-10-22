@@ -12,12 +12,14 @@ namespace startup_timer {
             timer = new Timer {
 				Interval = interval
 			};
+            Console.WriteLine("Start");
 			timer.Tick += new EventHandler(TimerEventProcessor);
 			timer.Start();
 		}
 
 		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs) {
-			handler.Update();
+            Console.WriteLine("Tick");
+            handler.Update();
 			timer.Enabled = true;
 		}
 	}

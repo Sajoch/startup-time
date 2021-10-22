@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace startup_timer {
     class TimeContainer : IObservable<TimeContainer> {
         public bool IsTimeElapsed { get; private set; }
-        public string ShortFormat => $"WorkTime: {dateFormat.FormatTimeSpan(DateTime.Now - startTime)}";
+        public string ShortFormat => GetWorkTimeText();
 
         DateTime startTime;
         DateTime endTime;
@@ -18,7 +18,6 @@ namespace startup_timer {
         }
 
         public void Update() {
-            var diff = DateTime.Now - startTime;
             if (DateTime.Now >= endTime && !IsTimeElapsed) {
                 IsTimeElapsed = true;
             }
@@ -34,9 +33,14 @@ namespace startup_timer {
         }
 
         public string GetInfo() {
-            var leftTime = dateFormat.FormatTimeSpan(endTime - DateTime.Now);
-            var doneDayAt = endTime.ToString("HH:mm");
-            return $"{ShortFormat}\nLeft: {leftTime}\n8 hours: {doneDayAt}";
+            var elements = new List<string>() {
+                GetWorkTimeText(),
+                GetLeftTimeText(),
+                GetBeginTimeText(),
+                GetNormalEndTimeText(),
+            };
+
+            return string.Join("\n", elements);
         }
 
         public IDisposable Subscribe(IObserver<TimeContainer> observer) {
@@ -47,6 +51,26 @@ namespace startup_timer {
 
         void Notify() {
             observers.ForEach(a => a.OnNext(this));
+        }
+
+        string GetWorkTimeText() {
+            var time = dateFormat.FormatTimeSpan(DateTime.Now - startTime);
+            return $"WorkTime: {time}";
+        }
+
+        string GetLeftTimeText() {
+            var time = dateFormat.FormatTimeSpan(endTime - DateTime.Now);
+            return $"Left: {time}";
+        }
+
+        string GetNormalEndTimeText() {
+            var time = endTime.ToString("HH:mm");
+            return $"End time: {time}";
+        }
+
+        string GetBeginTimeText() {
+            var time = startTime.ToString("HH:mm");
+            return $"Start time: {time}";
         }
     }
 }
