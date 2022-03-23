@@ -121,7 +121,7 @@
     <value>Startup-Timer</value>
   </data>
   <data name="dailyTimeSpan" xml:space="preserve">
-    <value>00:00:01</value>
+    <value>08:00:00</value>
   </data>
   <data name="endTime" xml:space="preserve">
     <value>End time: {0}</value>

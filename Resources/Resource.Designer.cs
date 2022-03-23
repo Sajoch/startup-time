@@ -70,7 +70,7 @@ namespace startup_timer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 00:00:01.
+        ///   Looks up a localized string similar to 08:00:00.
         /// </summary>
         internal static string dailyTimeSpan {
             get {
