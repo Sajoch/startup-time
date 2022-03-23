@@ -9,8 +9,7 @@ namespace startup_timer {
             var container = new UnityContainer();
             container.RegisterType<ITimeGetter, LogonTimeGetter>();
             container.RegisterSingleton<TimeContainer>(new InjectionConstructor(
-                new ResolvedParameter<ITimeGetter>(),
-                8
+                new ResolvedParameter<ITimeGetter>()
              ));
 
             RegisterTimers(container);

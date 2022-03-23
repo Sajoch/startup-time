@@ -1,19 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.Resources;
 
 namespace startup_timer {
     class TimeContainer : IObservable<TimeContainer> {
         public bool IsTimeElapsed { get; private set; }
         public string ShortFormat => GetWorkTimeText();
+        public string ShortWorkTime => dateFormat.FormatTimeSpan(DateTime.Now - startTime);
 
-        DateTime startTime;
-        DateTime endTime;
-        Formatter dateFormat = new Formatter();
-        List<IObserver<TimeContainer>> observers = new List<IObserver<TimeContainer>>();
+        private readonly DateTime startTime;
+        private readonly DateTime endTime;
+        private readonly Formatter dateFormat = new Formatter();
+        private readonly List<IObserver<TimeContainer>> observers = new List<IObserver<TimeContainer>>();
+        private readonly ResourceManager resource = new ResourceManager(typeof(Resources.Resource));
 
-        public TimeContainer(ITimeGetter getter, int workHours) {
+
+        public TimeContainer(ITimeGetter getter) {
+            var dailyWorkHours = resource.GetString("dailyTimeSpan") ?? "08:00:00";
+            var workHours = TimeSpan.Parse(dailyWorkHours);
             startTime = getter.GetTime();
-            endTime = startTime.AddHours(workHours);
+            endTime = startTime + workHours;
             Update();
         }
 
@@ -54,23 +60,31 @@ namespace startup_timer {
         }
 
         string GetWorkTimeText() {
-            var time = dateFormat.FormatTimeSpan(DateTime.Now - startTime);
-            return $"WorkTime: {time}";
+            var format = resource.GetString("workTime");
+            return string.Format(format, ShortWorkTime);
         }
 
         string GetLeftTimeText() {
             var time = dateFormat.FormatTimeSpan(endTime - DateTime.Now);
-            return $"Left: {time}";
+            var format = resource.GetString("leftTime");
+            return string.Format(format, time);
         }
 
         string GetNormalEndTimeText() {
-            var time = endTime.ToString("HH:mm");
-            return $"End time: {time}";
+            var time = FormatTime(endTime);
+            var format = resource.GetString("endTime");
+            return string.Format(format, time);
         }
 
         string GetBeginTimeText() {
-            var time = startTime.ToString("HH:mm");
-            return $"Start time: {time}";
+            var time = FormatTime(startTime);
+            var format = resource.GetString("startTime");
+            return string.Format(format, time);
+        }
+
+        string FormatTime(DateTime time) {
+            var timeFormat = resource.GetString("timeFormat") ?? "HH:mm";
+            return time.ToString(timeFormat);
         }
     }
 }
