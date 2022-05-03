@@ -1,37 +1,40 @@
-using System.Linq;
-using System.Windows.Forms;
-using Unity;
-using Unity.Injection;
+using MediatR;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using StartupTimer.Models;
+using StartupTimer.TimeProviders;
+using StartupTimer.Views;
+using StartupTimer.Views.Report;
+using StartupTimer.Watchdogs;
+using System.IO;
 
-namespace startup_timer {
-    static class Program {
+namespace StartupTimer {
+    internal static class Program {
         static void Main() {
-            var container = new UnityContainer();
-            container.RegisterType<ITimeGetter, LogonTimeGetter>();
-            container.RegisterSingleton<TimeContainer>(new InjectionConstructor(
-                new ResolvedParameter<ITimeGetter>()
-             ));
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true);
 
-            RegisterTimers(container);
+            var configuration = builder.Build();
 
-            container.RegisterType<NotifyWidget>();
-            container.Resolve<WorkTime>();
-            container.ResolveAll<ITimerHandler>();
-            container.ResolveAll<TimerHandler>();
-            Application.Run();
-        }
+            var services = new ServiceCollection();
+            services.AddSingleton(configuration);
+            services.AddSingleton<WorkTimeProvider>();
+            services.AddSingleton<TimeReport>();
+            services.AddSingleton<ICurrentTimeProvider, CurrentTimeProvider>();
+            services.AddTransient<ITimeProvider, BootUpTimeProvider>();
+            services.AddTransient<ITimeProvider, LoginTimeProvider>();
+            services.AddTransient<TimeWatchdogFactory>();
+            services.AddTransient<IWatchdogScheme, OverworkWatchdogScheme>();
+            services.AddTransient<IWatchdogScheme, AlmostDoneWorkWatchdogScheme>();
+            services.AddTransient<NotifyWidget>();
+            services.AddMediatR(typeof(Startup));
+            services.AddSingleton<Startup>();
+            services.Configure<WorkConfiguration>(configuration.GetSection(WorkConfiguration.OPTION_NAME));
 
-        static void RegisterTimers(IUnityContainer container) {
-            RegisterTimer<OverflowUpdateTimer>(container, "OverflowTimer", 60 * 6000);
-            RegisterTimer<WidgetUpdateTimer>(container, "8HourTimer", 1000);
-        }
-
-        static void RegisterTimer<T>(IUnityContainer container, string name, int interval) where T : ITimerHandler {
-            container.RegisterType<ITimerHandler, T>(name);
-            container.RegisterType<TimerHandler>(name, new InjectionConstructor(
-                interval,
-                new ResolvedParameter<ITimerHandler>(name)
-            ));
+            var serviceProvider = services.BuildServiceProvider(true);
+            var startup = serviceProvider.GetRequiredService<Startup>();
+            startup.Run();
         }
     }
 }

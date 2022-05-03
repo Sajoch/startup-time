@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace startup_timer.Resources {
+namespace StartupTimer.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace startup_timer.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    internal class LocalizationResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        internal LocalizationResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace startup_timer.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("startup_timer.Resources.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("StartupTimer.Resources.LocalizationResource", typeof(LocalizationResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,74 +61,103 @@ namespace startup_timer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Startup-Timer.
+        ///   Looks up a localized string similar to Time is ticking...
+        ///Prepare to finish your work!
+        ///Left time: {0}.
         /// </summary>
-        internal static string appName {
+        internal static string AlmostDoneNotify_Format {
             get {
-                return ResourceManager.GetString("appName", resourceCulture);
+                return ResourceManager.GetString("AlmostDoneNotify.Format", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 08:00:00.
+        ///   Looks up a localized string similar to Startup-Timer.
         /// </summary>
-        internal static string dailyTimeSpan {
+        internal static string AppName {
             get {
-                return ResourceManager.GetString("dailyTimeSpan", resourceCulture);
+                return ResourceManager.GetString("AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit.
+        /// </summary>
+        internal static string ContextMenu_Exit_Text {
+            get {
+                return ResourceManager.GetString("ContextMenu.Exit.Text", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to End time: {0}.
         /// </summary>
-        internal static string endTime {
+        internal static string EndTime_Format {
             get {
-                return ResourceManager.GetString("endTime", resourceCulture);
+                return ResourceManager.GetString("EndTime.Format", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Left: {0}.
         /// </summary>
-        internal static string leftTime {
+        internal static string LeftTime_Format {
             get {
-                return ResourceManager.GetString("leftTime", resourceCulture);
+                return ResourceManager.GetString("LeftTime.Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Over time: {0}.
+        /// </summary>
+        internal static string OverTime_Format {
+            get {
+                return ResourceManager.GetString("OverTime.Format", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to You already worked {0}!.
         /// </summary>
-        internal static string overworkAlert {
+        internal static string OverworkAlert_Format {
             get {
-                return ResourceManager.GetString("overworkAlert", resourceCulture);
+                return ResourceManager.GetString("OverworkAlert.Format", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Start time: {0}.
         /// </summary>
-        internal static string startTime {
+        internal static string StartTime_Format {
             get {
-                return ResourceManager.GetString("startTime", resourceCulture);
+                return ResourceManager.GetString("StartTime.Format", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to HH:mm.
         /// </summary>
-        internal static string timeFormat {
+        internal static string TimeFormat {
             get {
-                return ResourceManager.GetString("timeFormat", resourceCulture);
+                return ResourceManager.GetString("TimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}:{1}min{2}.
+        /// </summary>
+        internal static string TimeSpan_Format {
+            get {
+                return ResourceManager.GetString("TimeSpan.Format", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to WorkTime: {0}.
         /// </summary>
-        internal static string workTime {
+        internal static string WorkTime_Format {
             get {
-                return ResourceManager.GetString("workTime", resourceCulture);
+                return ResourceManager.GetString("WorkTime.Format", resourceCulture);
             }
         }
     }

@@ -1,24 +1,29 @@
 using System;
 using System.Windows.Forms;
 
-namespace startup_timer {
-	class TimerHandler {
-		private readonly ITimerHandler handler;
-		Timer timer;
+namespace StartupTimer.Timers {
+    internal class TimerHandler : IDisposable {
+        readonly ITimerHandler handler;
+        readonly Timer timer;
 
-		public TimerHandler(int interval, ITimerHandler handler) {
-			this.handler = handler;
-            handler.Update();
+        public TimerHandler(TimeSpan interval, ITimerHandler handler) {
+            this.handler = handler;
             timer = new Timer {
-				Interval = interval
-			};
-			timer.Tick += new EventHandler(TimerEventProcessor);
-			timer.Start();
-		}
+                Interval = (int)interval.TotalMilliseconds
+            };
+            timer.Tick += TimerOnTick;
+            timer.Start();
+            handler?.Update();
+        }
 
-		private void TimerEventProcessor(Object myObject, EventArgs myEventArgs) {
-            handler.Update();
-			timer.Enabled = true;
-		}
-	}
+        public void Dispose() {
+            timer.Enabled = false;
+            timer.Dispose();
+        }
+
+        void TimerOnTick(object sender, EventArgs e) {
+            handler?.Update();
+            timer.Enabled = true;
+        }
+    }
 }

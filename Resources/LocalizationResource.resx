@@ -123,16 +123,39 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
-    <assembly alias="System.Windows.Forms"
-              name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
-    <data name="Icon1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>..\Resources\Icon1.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral,
-            PublicKeyToken=b03f5f7f11d50a3a
-        </value>
+    <data name="AppName" xml:space="preserve">
+    <value>Startup-Timer</value>
+  </data>
+    <data name="EndTime.Format" xml:space="preserve">
+    <value>End time: {0}</value>
+  </data>
+    <data name="LeftTime.Format" xml:space="preserve">
+    <value>Left: {0}</value>
+  </data>
+    <data name="OverworkAlert.Format" xml:space="preserve">
+    <value>You already worked {0}!</value>
+  </data>
+    <data name="StartTime.Format" xml:space="preserve">
+    <value>Start time: {0}</value>
+  </data>
+    <data name="TimeFormat" xml:space="preserve">
+    <value>HH:mm</value>
+  </data>
+    <data name="WorkTime.Format" xml:space="preserve">
+    <value>WorkTime: {0}</value>
+  </data>
+    <data name="TimeSpan.Format" xml:space="preserve">
+    <value>{0}:{1}min{2}</value>
+  </data>
+    <data name="ContextMenu.Exit.Text" xml:space="preserve">
+        <value>Exit</value>
     </data>
-    <data name="Icon2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-        <value>..\Resources\Icon2.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral,
-            PublicKeyToken=b03f5f7f11d50a3a
-        </value>
+    <data name="AlmostDoneNotify.Format" xml:space="preserve">
+        <value>Time is ticking...
+Prepare to finish your work!
+Left time: {0}</value>
+    </data>
+    <data name="OverTime.Format" xml:space="preserve">
+        <value>Over time: {0}</value>
     </data>
 </root>

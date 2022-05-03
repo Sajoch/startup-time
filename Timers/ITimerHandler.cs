@@ -1,5 +1,5 @@
-﻿namespace startup_timer {
-	interface ITimerHandler {
-		void Update();
-	}
+﻿namespace StartupTimer.Timers {
+    internal interface ITimerHandler {
+        void Update();
+    }
 }
